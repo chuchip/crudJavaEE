@@ -10,6 +10,7 @@ import profesorp.restexample.entity.Clientes;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.transaction.UserTransaction;
@@ -23,6 +24,7 @@ import profesorp.restexample.entity.Paises;
  *
  * @author chuchip
  */
+
 public class PaisesJpaController implements Serializable {
 
     public PaisesJpaController(UserTransaction utx, EntityManagerFactory emf) {

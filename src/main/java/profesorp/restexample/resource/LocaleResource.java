@@ -7,8 +7,12 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
+import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.ext.Provider;
 import profesorp.restexample.controller.LocaleController;
 import profesorp.restexample.entity.Locales;
 
@@ -20,8 +24,8 @@ import profesorp.restexample.entity.Locales;
 @Path("locale")
 public class LocaleResource {
     
-    @Inject
-    LocaleController localeController;
+    @Inject   
+    private  LocaleController localeController;
     
     @GET    
     @Produces(MediaType.APPLICATION_JSON)
@@ -39,4 +43,5 @@ public class LocaleResource {
          return new Locales("ES","España");
     }
     
+   
 }
