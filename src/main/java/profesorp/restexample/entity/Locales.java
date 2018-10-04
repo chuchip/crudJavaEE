@@ -34,11 +34,10 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "locales")
 @XmlRootElement
-@JsonbPropertyOrder({"loc_codi", "loc_nomb"})
+@JsonbPropertyOrder({"codigo", "nombre"})
 @NamedQueries({
-    @NamedQuery(name = "Locales.findAll", query = "SELECT l FROM Locales l"),
-    @NamedQuery(name = "Locales.findByLocCodi", query = "SELECT l FROM Locales l WHERE l.locCodi = :locCodi"),
-    @NamedQuery(name = "Locales.findByLocNomb", query = "SELECT l FROM Locales l WHERE l.locNomb = :locNomb")})
+    @NamedQuery(name = "Locales.findAll", query = "SELECT l FROM Locales l")
+})
 
 public class Locales implements Serializable {
     public static final String FIND_ALL = "Locales.findAll";
@@ -48,12 +47,13 @@ public class Locales implements Serializable {
     @NotNull
     @Size(min = 1, max = 5)
     @Column(name = "loc_codi")
-    private String locCodi;
+    private String loc_codi;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 30)
     @Column(name = "loc_nomb")
-    private String locNomb;
+    private String nombre;
     
     @JsonbTransient    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "locCodi", fetch = FetchType.LAZY)
@@ -63,28 +63,28 @@ public class Locales implements Serializable {
     }
 
     public Locales(String locCodi) {
-        this.locCodi = locCodi;
+        this.loc_codi = locCodi;
     }
 
     public Locales(String locCodi, String locNomb) {
-        this.locCodi = locCodi;
-        this.locNomb = locNomb;
+        this.loc_codi = locCodi;
+        this.nombre = locNomb;
     }
 
-    public String getLocCodi() {
-        return locCodi;
+    public String getCodigo() {
+        return loc_codi;
     }
 
-    public void setLocCodi(String locCodi) {
-        this.locCodi = locCodi;
+    public void setCodigo(String codigo) {
+        this.loc_codi = codigo;
     }
 
-    public String getLocNomb() {
-        return locNomb;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setLocNomb(String locNomb) {
-        this.locNomb = locNomb;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
      @JsonbTransient
@@ -99,7 +99,7 @@ public class Locales implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (locCodi != null ? locCodi.hashCode() : 0);
+        hash += (loc_codi != null ? loc_codi.hashCode() : 0);
         return hash;
     }
 
@@ -110,7 +110,7 @@ public class Locales implements Serializable {
             return false;
         }
         Locales other = (Locales) object;
-        if ((this.locCodi == null && other.locCodi != null) || (this.locCodi != null && !this.locCodi.equals(other.locCodi))) {
+        if ((this.loc_codi == null && other.loc_codi != null) || (this.loc_codi != null && !this.loc_codi.equals(other.loc_codi))) {
             return false;
         }
         return true;
@@ -118,7 +118,7 @@ public class Locales implements Serializable {
 
     @Override
     public String toString() {
-        return "profesorp.restexample.entity.Locales[ locCodi=" + locCodi + " ]";
+        return "profesorp.restexample.entity.Locales[ locCodi=" + loc_codi + " ]";
     }
     
 }

@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Objects;
+import java.util.logging.Level;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -26,19 +27,36 @@ import profesorp.restexample.entity.Locales;
 public class LocaleController implements Serializable {
    @Inject
    EntityManager em;
-   
-   public LocaleController()
-   {
-       
-   }
+     
    public Collection<Locales> findAll() {       
         System.out.println("** Buscando todos los locale: ");
         TypedQuery<Locales> findAll =  em.createNamedQuery(Locales.FIND_ALL, Locales.class);
         
         return Collections.unmodifiableCollection(findAll.getResultList());
    }
-   public Locales findByLocale(String locale)
+   public Locales findById(String locCodi)
    {
-       return em.getReference(Locales.class, Objects.requireNonNull(locale));      
+       return em.getReference(Locales.class, Objects.requireNonNull(locCodi));      
    }
+   
+    public void create(Locales locale) {
+        Objects.requireNonNull(locale);        
+        em.persist(locale);
+    }
+     
+    public boolean exists(String locCodi) {       
+        return em.find(Locales.class, locCodi) != null;
+    }
+    
+     public void update(Locales locale) {
+        Objects.requireNonNull(locale);
+        em.merge(locale);
+    }
+
+    
+    public void delete(String locCodi) {
+        Objects.requireNonNull(locCodi);
+        Locales reference = em.getReference(Locales.class, locCodi);
+        em.remove(reference);
+    }
 }

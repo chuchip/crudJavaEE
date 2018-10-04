@@ -1,20 +1,21 @@
 package profesorp.restexample.resource;
 
-import java.util.Arrays;
-import java.util.Collection;
+import java.net.URI;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import java.util.List;
+import java.util.Objects;
 import javax.ejb.Stateless;
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
-import javax.inject.Named;
+import javax.ws.rs.BadRequestException;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.ext.Provider;
+import javax.ws.rs.core.UriBuilder;
 import profesorp.restexample.controller.LocaleController;
 import profesorp.restexample.entity.Locales;
 
@@ -44,18 +45,56 @@ public class LocaleResource {
     @Path("/{locale}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response findLocale(@PathParam("locale") String locCodi) {   
-        Locales l= localeController.findByLocale(locCodi);
+        Locales l= localeController.findById(locCodi);
 
         try {
-            l.getLocNomb();
+            l.getNombre();
         } catch (javax.persistence.EntityNotFoundException k)
-        {
-            System.out.println("No encontrado Locale");            
+        {            
             return Response.status(Response.Status.NOT_FOUND).build();
         }
         return Response.ok(l).build();
       
     }
+    /**
+     * Añadir Locale     
+     * @param locale
+     * @return 
+     */
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response create(Locales locale) {
+
+        if ( localeController.exists(locale.getCodigo())) {
+            return Response.status(Response.Status.CONFLICT).build();
+        }
+        localeController.create(locale);
+        URI location = UriBuilder.fromResource(LocaleResource.class)
+                .path("/{locale}")
+                .resolveTemplate("locale", locale.getCodigo())
+                .build();
+        return Response.created(location).build();
+    }
+    @PUT
+    @Path("/{locale}")
+    public Response update(@PathParam("locale") String locale, Locales locales) {
+        if (!Objects.equals(locale, locales.getCodigo())) {
+            throw new BadRequestException("Propiedad locCodi de Objeto Locale debe coincidir con el parametro mandado.");
+        }
+        localeController.update(locales);
+        return Response.ok().build();
+    }
     
-   
+    @DELETE
+    @Path("/{locale}")
+    public Response delete(@PathParam("locale") String locale) {
+        System.out.println("En delete Locale");
+        if ( ! localeController.exists(locale)) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        localeController.delete(locale);
+        return Response.ok().build();
+    }
+
+
 }

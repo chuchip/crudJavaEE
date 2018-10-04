@@ -1,5 +1,6 @@
+drop table prov_espana;
 create table prov_espana(
- cop_codi varchar(2) not null,
+ cop_codi int not null,
  cop_nombre varchar(30) not NULL,
  constraint ix_prov_espana primary  key (cop_codi)
 );
