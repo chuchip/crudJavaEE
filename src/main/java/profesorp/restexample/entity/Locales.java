@@ -7,6 +7,9 @@ package profesorp.restexample.entity;
 
 import java.io.Serializable;
 import java.util.Collection;
+import javax.json.bind.annotation.JsonbPropertyOrder;
+import javax.json.bind.annotation.JsonbTransient;
+import javax.jws.WebMethod;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -19,6 +22,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -29,6 +34,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "locales")
 @XmlRootElement
+@JsonbPropertyOrder({"loc_codi", "loc_nomb"})
 @NamedQueries({
     @NamedQuery(name = "Locales.findAll", query = "SELECT l FROM Locales l"),
     @NamedQuery(name = "Locales.findByLocCodi", query = "SELECT l FROM Locales l WHERE l.locCodi = :locCodi"),
@@ -49,8 +55,8 @@ public class Locales implements Serializable {
     @Column(name = "loc_nomb")
     private String locNomb;
     
-     @XmlTransient
-     @OneToMany(cascade = CascadeType.ALL, mappedBy = "locCodi", fetch = FetchType.LAZY)
+    @JsonbTransient    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "locCodi", fetch = FetchType.LAZY)
     private Collection<Paises> paisesCollection;
 
     public Locales() {
@@ -81,11 +87,11 @@ public class Locales implements Serializable {
         this.locNomb = locNomb;
     }
 
-    @XmlTransient
+     @JsonbTransient
     public Collection<Paises> getPaisesCollection() {
         return paisesCollection;
     }
-    @XmlTransient
+    @JsonbTransient
     public void setPaisesCollection(Collection<Paises> paisesCollection) {
         this.paisesCollection = paisesCollection;
     }

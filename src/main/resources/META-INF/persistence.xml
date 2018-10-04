@@ -3,7 +3,7 @@
   <persistence-unit name="restExample" transaction-type="JTA">
     <description>Unidad de persistencia de Ejemplo</description>
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-    <jta-data-source>java:app/testrest</jta-data-source>
+    <jta-data-source>jdbc/sample</jta-data-source>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="eclipselink.logging.level" value="FINE"/>
