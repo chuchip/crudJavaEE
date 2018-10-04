@@ -6,6 +6,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.BadRequestException;
@@ -19,8 +21,6 @@ import javax.ws.rs.core.UriBuilder;
 import profesorp.restexample.controller.LocaleController;
 import profesorp.restexample.entity.Locales;
 
-
-
 /**
  * The REST resource implementation class.
  */
@@ -30,15 +30,14 @@ public class LocaleResource {
     
     @Inject   
     private  LocaleController localeController;
+        
+    private  Logger logger=  Logger.getLogger(LocaleResource.class.getName());
     
     @GET    
     @Produces(MediaType.APPLICATION_JSON)
     public Response findAllLocales() {        
-      
+        logger.log(Level.INFO, "Buscando todas las locales");
         return Response.ok(localeController.findAll()).build();
-//        LocalesJpaController lc=new LocalesJpaController();
-//           List<Locales> hm=Arrays.asList(new  Locales("ES","España"),new  Locales("FR","Francia"));
-//           return hm;
     }
   
     @GET
@@ -88,7 +87,7 @@ public class LocaleResource {
     @DELETE
     @Path("/{locale}")
     public Response delete(@PathParam("locale") String locale) {
-        System.out.println("En delete Locale");
+        logger.log(Level.INFO, "Borrando Locale");
         if ( ! localeController.exists(locale)) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }

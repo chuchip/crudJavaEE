@@ -60,8 +60,7 @@ public class Paises implements Serializable {
     @NotNull
     @Column(name = "pai_activ")
     private short paiActiv;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "paiInic", fetch = FetchType.LAZY)
-    private Collection<Clientes> clientesCollection;
+   
     
     @JoinColumn(name = "loc_codi", referencedColumnName = "loc_codi")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
@@ -113,14 +112,7 @@ public class Paises implements Serializable {
         this.paiActiv = paiActiv;
     }
 
-    @XmlTransient
-    public Collection<Clientes> getClientesCollection() {
-        return clientesCollection;
-    }
-
-    public void setClientesCollection(Collection<Clientes> clientesCollection) {
-        this.clientesCollection = clientesCollection;
-    }
+   
 
     public Locales getLocCodi() {
         return locCodi;

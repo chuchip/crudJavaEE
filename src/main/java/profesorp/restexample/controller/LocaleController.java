@@ -10,6 +10,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Objects;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -27,9 +28,11 @@ import profesorp.restexample.entity.Locales;
 public class LocaleController implements Serializable {
    @Inject
    EntityManager em;
-     
+   
+   private  Logger logger=  Logger.getLogger(LocaleController.class.getName());
+   
    public Collection<Locales> findAll() {       
-        System.out.println("** Buscando todos los locale: ");
+        logger.log(Level.INFO,"** Buscando todos los locale: ");
         TypedQuery<Locales> findAll =  em.createNamedQuery(Locales.FIND_ALL, Locales.class);
         
         return Collections.unmodifiableCollection(findAll.getResultList());
