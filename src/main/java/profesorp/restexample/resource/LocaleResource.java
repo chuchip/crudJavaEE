@@ -1,6 +1,7 @@
 package profesorp.restexample.resource;
 
 import java.net.URI;
+import java.util.Collection;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -38,9 +39,9 @@ public class LocaleResource {
     }
   
     @GET
-    @Path("/{locale}")
+    @Path("/{codigo}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response findLocale(@PathParam("locale") String locCodi) {   
+    public Response findLocale(@PathParam("codigo") String locCodi) {   
         Locales l= localeController.findById(locCodi);
 
         try {
@@ -51,6 +52,17 @@ public class LocaleResource {
         }
         return Response.ok(l).build();
       
+    }
+    
+    @GET
+    @Path("/{codigo}/{nombre}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response findLocale(@PathParam("codigo") String codigo, @PathParam("nombre") String nombre)
+    {   
+        Collection <Locales> l= localeController.findLike(codigo,nombre);
+        if (l.size()==0)        
+                return Response.status(Response.Status.NOT_FOUND).build();
+        return Response.ok(l).build();      
     }
     /**
      * Añadir Locale     

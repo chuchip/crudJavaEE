@@ -43,6 +43,17 @@ public class LocaleController implements Serializable {
         
         return Collections.unmodifiableCollection(findAll.getResultList());
    }
+   
+    public Collection<Locales> findLike(String codigo, String nombre) {       
+        logger.log(Level.INFO,"** Buscando todos los locale: ");
+        TypedQuery<Locales> findAll =  em.createNamedQuery(Locales.FIND_LIKE, Locales.class)
+                .setParameter("codigo", "%"+codigo+"%")
+                .setParameter("nombre",  "%"+nombre.toUpperCase()+ "%");
+//                .setParameter("codigo", codigo)
+//                .setParameter("nombre",  nombre.toUpperCase());
+        
+        return Collections.unmodifiableCollection(findAll.getResultList());
+   }
    public Locales findById(String locCodi)
    {
        return em.getReference(Locales.class, Objects.requireNonNull(locCodi));      

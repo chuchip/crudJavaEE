@@ -23,11 +23,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @JsonbPropertyOrder({"codigo", "nombre"})
 @NamedQueries({
-    @NamedQuery(name = "Locales.findAll", query = "SELECT l FROM Locales l")
+    @NamedQuery(name = "Locales.findAll", query = "SELECT l FROM Locales l"),
+    @NamedQuery(name = "Locales.findLike", query = "SELECT l FROM Locales l where l.loc_codi like :codigo and upper(l.nombre) like :nombre")
 })
 
 public class Locales implements Serializable {
     public static final String FIND_ALL = "Locales.findAll";
+    public static final String FIND_LIKE = "Locales.findLike";
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
