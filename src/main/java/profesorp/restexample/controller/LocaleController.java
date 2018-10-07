@@ -28,6 +28,21 @@ public class LocaleController implements Serializable {
         
         return Collections.unmodifiableCollection(findAll.getResultList());
    }
+   /**
+    * Encunetra TODOS los registros . 
+    * Devuelve numeroRegistros de registros a partir de la posicion mandada
+    * @param inicio Primer registro a devolver. 0 es el primero.
+    * @param numeroRegistros Numero de registros maximo a devolver.
+    * @return 
+    */
+   public Collection<Locales> findAll(int inicio,int numeroRegistros) {       
+        logger.log(Level.INFO,"** Buscando todos los locale: ");
+        TypedQuery<Locales> findAll =  em.createNamedQuery(Locales.FIND_ALL, Locales.class)
+                .setFirstResult(inicio)
+                .setMaxResults(numeroRegistros);
+        
+        return Collections.unmodifiableCollection(findAll.getResultList());
+   }
    public Locales findById(String locCodi)
    {
        return em.getReference(Locales.class, Objects.requireNonNull(locCodi));      

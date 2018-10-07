@@ -68,27 +68,27 @@ public class LocaleResource {
         URI location = UriBuilder.fromResource(LocaleResource.class)
                 .path("/{locale}")
                 .resolveTemplate("locale", locale.getCodigo())
-                .build();
+                .build();        
         return Response.created(location).build();
     }
     @PUT
-    @Path("/{locale}")
-    public Response update(@PathParam("locale") String locale, Locales locales) {
-        if (!Objects.equals(locale, locales.getCodigo())) {
-            throw new BadRequestException("Propiedad locCodi de Objeto Locale debe coincidir con el parametro mandado.");
+    @Path("/{codigo}")
+    public Response update(@PathParam("locale") String codigo, Locales locales) {
+        if (!Objects.equals(codigo, locales.getCodigo())) {
+            throw new BadRequestException("Propiedad 'codigo' de Objeto Locale debe coincidir con el parámetro mandado.");
         }
         localeController.update(locales);
         return Response.ok().build();
     }
     
     @DELETE
-    @Path("/{locale}")
-    public Response delete(@PathParam("locale") String locale) {
-        logger.log(Level.INFO, "Borrando Locale: "+locale);
-        if ( ! localeController.exists(locale)) {
+    @Path("/{codigo}")
+    public Response delete(@PathParam("codigo") String codigo) {
+        logger.log(Level.INFO, "Borrando Locale: "+codigo);
+        if ( ! localeController.exists(codigo)) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-        localeController.delete(locale);
+        localeController.delete(codigo);
         return Response.ok().build();
     }
 
