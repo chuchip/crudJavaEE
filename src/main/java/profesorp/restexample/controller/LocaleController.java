@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package profesorp.restexample.controller;
 
 import java.io.Serializable;
@@ -19,17 +14,13 @@ import javax.transaction.Transactional;
 import profesorp.restexample.entity.Locales;
 
 
-/**
- *
- * @author chuchip
- */
 @ApplicationScoped
 @Transactional(Transactional.TxType.REQUIRED)
 public class LocaleController implements Serializable {
    @Inject
    EntityManager em;
    
-   private  Logger logger=  Logger.getLogger(LocaleController.class.getName());
+   private final  Logger logger=  Logger.getLogger(LocaleController.class.getName());
    
    public Collection<Locales> findAll() {       
         logger.log(Level.INFO,"** Buscando todos los locale: ");
@@ -43,6 +34,7 @@ public class LocaleController implements Serializable {
    }
    
     public void create(Locales locale) {
+        logger.log(Level.INFO,"** Creando  locale: "+locale.getCodigo()+ " - "+locale.getNombre());
         Objects.requireNonNull(locale);        
         em.persist(locale);
     }
@@ -52,12 +44,14 @@ public class LocaleController implements Serializable {
     }
     
      public void update(Locales locale) {
+        logger.log(Level.INFO,"** Actualizando  locale: "+locale.getCodigo());
         Objects.requireNonNull(locale);
         em.merge(locale);
     }
 
     
     public void delete(String locCodi) {
+        logger.log(Level.INFO,"** Borrando  locale: "+locCodi);
         Objects.requireNonNull(locCodi);
         Locales reference = em.getReference(Locales.class, locCodi);
         em.remove(reference);

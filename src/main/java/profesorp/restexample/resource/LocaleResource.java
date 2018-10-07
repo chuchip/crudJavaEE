@@ -21,9 +21,6 @@ import javax.ws.rs.core.UriBuilder;
 import profesorp.restexample.controller.LocaleController;
 import profesorp.restexample.entity.Locales;
 
-/**
- * The REST resource implementation class.
- */
 @Path("locale")
 @Stateless
 public class LocaleResource {
@@ -87,7 +84,7 @@ public class LocaleResource {
     @DELETE
     @Path("/{locale}")
     public Response delete(@PathParam("locale") String locale) {
-        logger.log(Level.INFO, "Borrando Locale");
+        logger.log(Level.INFO, "Borrando Locale: "+locale);
         if ( ! localeController.exists(locale)) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
