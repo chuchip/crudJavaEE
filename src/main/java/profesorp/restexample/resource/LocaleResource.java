@@ -85,7 +85,8 @@ public class LocaleResource {
     }
     @PUT
     @Path("/{codigo}")
-    public Response update(@PathParam("locale") String codigo, Locales locales) {
+    public Response update(@PathParam("codigo") String codigo, Locales locales) {
+         logger.log(Level.INFO, "Actualizando Locale: "+codigo+" de locale "+locales.getCodigo());
         if (!Objects.equals(codigo, locales.getCodigo())) {
             throw new BadRequestException("Propiedad 'codigo' de Objeto Locale debe coincidir con el parámetro mandado.");
         }
